@@ -40,50 +40,59 @@ class MovableFigure(Figure):
             self.coordinates.x = min(SCREEN_WIDTH - self.width, self.coordinates.x + self.speed)
 
 
-def initWindow():
-    window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption(TITLE)
-    return window
+class Game:
 
-def movePlayer(player):
-    keys = pygame.key.get_pressed()
-    move = None
-    if keys[pygame.K_LEFT]:
-        move = Direction.LEFT
-    if keys[pygame.K_RIGHT]:
-        move = Direction.RIGHT
-    if keys[pygame.K_UP]:
-       move = Direction.UP
-    if keys[pygame.K_DOWN]:
-        move = Direction.DOWN
-    player.move(move)
+    def __init__(self):
+        pygame.init()
+        self.figureList = []
+        self.player = MovableFigure(Coordinates(50, 50), 50, 50, 15)
+        self.figureList.append(self.player)
+        self.initWindow()
 
-def drawFigures(window, figureList):
-    for figure in figureList:
-        pygame.draw.rect(window, (255, 0, 0), (figure.coordinates.x, figure.coordinates.y, figure.width, figure.height))
+    def initWindow(self):
+        self.window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        pygame.display.set_caption(TITLE)
+
+    def movePlayer(self):
+        keys = pygame.key.get_pressed()
+        move = None
+        if keys[pygame.K_LEFT]:
+            move = Direction.LEFT
+        if keys[pygame.K_RIGHT]:
+            move = Direction.RIGHT
+        if keys[pygame.K_UP]:
+            move = Direction.UP
+        if keys[pygame.K_DOWN]:
+            move = Direction.DOWN
+        
+        if move != None:
+            self.player.move(move)
+
+    def refreshScreen(self):
+        self.window.fill((0, 0, 0))
+        self.drawFigures()
+        pygame.display.update()
+
+    def drawFigures(self):
+        for figure in self.figureList:
+            pygame.draw.rect(self.window, (255, 0, 0), (figure.coordinates.x, figure.coordinates.y, figure.width, figure.height))
+
+    def play(self):
+        run = True
+        while run:
+            pygame.time.delay(100)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+
+            self.movePlayer()
+            self.refreshScreen()
+        pygame.quit()       
 
 def main():
-    pygame.init()
-    window = initWindow()
-    
-    figureList = []
-    player = MovableFigure(Coordinates(50, 50), 50, 50, 15)
-    figureList.append(player)
 
-
-    run = True
-    while run:
-        pygame.time.delay(100)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-
-        movePlayer(player)
-        window.fill((0, 0, 0))
-
-        drawFigures(window, figureList)
-        pygame.display.update()
-    pygame.quit()
+    game = Game()
+    game.play()
 
 
 
