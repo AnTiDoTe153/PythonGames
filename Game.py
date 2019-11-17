@@ -2,6 +2,7 @@ import pygame
 from MovableFigure import MovableFigure
 from Coordinates import Coordinates
 from Direction import Direction
+from Figure import Figure
 from Map import Map
 
 class Game:
@@ -13,6 +14,10 @@ class Game:
         self.map = Map(500, 500)
         self.player = MovableFigure(Coordinates(50, 50), 50, 50, 15)
         self.figureList.append(self.player)
+
+        randomFigure = Figure(Coordinates(300, 300), 20, 20)
+        self.figureList.append(randomFigure)
+
         self.initWindow()
 
     def initWindow(self):
