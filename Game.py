@@ -12,7 +12,7 @@ class Game:
         self.figureList = []
         self.title = "FirstGame"
         self.map = Map(500, 500)
-        self.player = MovableFigure(Coordinates(50, 50), 50, 50, 15)
+        self.player = MovableFigure(Coordinates(50, 50), 50, 50, 15, 20)
         self.figureList.append(self.player)
 
         randomFigure = Figure(Coordinates(300, 300), 20, 20)
@@ -31,13 +31,10 @@ class Game:
             move = Direction.LEFT
         if keys[pygame.K_RIGHT]:
             move = Direction.RIGHT
-        if keys[pygame.K_UP]:
-            move = Direction.UP
         if keys[pygame.K_DOWN]:
             move = Direction.DOWN
         
-        if move != None:
-            self.player.move(move, self.map)
+        self.player.move(move, self.map)
 
     def refreshScreen(self):
         self.window.fill((0, 0, 0))
