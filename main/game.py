@@ -1,9 +1,8 @@
 import pygame
-from MovableFigure import MovableFigure
-from Coordinates import Coordinates
-from Direction import Direction
-from Figure import Figure
-from Map import Map
+from figure import Figure
+from movableFigure import MovableFigure
+from direction import Direction
+from gameMap import GameMap
 
 class Game:
 
@@ -11,11 +10,11 @@ class Game:
         pygame.init()
         self.figureList = []
         self.title = "FirstGame"
-        self.map = Map(500, 500)
-        self.player = MovableFigure(Coordinates(50, 50), 50, 50, 15, 20)
+        self.map = GameMap(500, 500)
+        self.player = MovableFigure(50, 50, 50, 50, 5)
         self.figureList.append(self.player)
 
-        randomFigure = Figure(Coordinates(300, 300), 20, 20)
+        randomFigure = Figure(300, 300, 20, 20)
         self.figureList.append(randomFigure)
 
         self.initWindow()
@@ -33,6 +32,8 @@ class Game:
             move = Direction.RIGHT
         if keys[pygame.K_DOWN]:
             move = Direction.DOWN
+        if keys[pygame.K_UP]:
+            move = Direction.UP
         
         self.player.move(move, self.map)
 
@@ -43,12 +44,12 @@ class Game:
 
     def drawFigures(self):
         for figure in self.figureList:
-            pygame.draw.rect(self.window, (255, 0, 0), (figure.coordinates.x, figure.coordinates.y, figure.width, figure.height))
+            figure.draw(self.window)
 
     def play(self):
         run = True
         while run:
-            pygame.time.delay(100)
+            pygame.time.delay(10)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
