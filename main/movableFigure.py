@@ -20,9 +20,11 @@ class MovableFigure(Figure):
         if direction == Direction.RIGHT:
             self.pozX += self.speed
 
-        self.correctMovement(map)
+        self.correctPosition(map)
 
-    def correctMovement(self, map):
+    
+
+    def correctPosition(self, map):
         self.pozY = max(0, self.pozY)
         self.pozY = min(map.height - self.height, self.pozY)
 

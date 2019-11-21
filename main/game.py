@@ -12,15 +12,11 @@ class Game:
         self.title = "FirstGame"
         self.map = GameMap(500, 500)
         self.player = MovableFigure(50, 50, 50, 50, 5)
-        self.figureList.append(self.player)
-
-        randomFigure = Figure(300, 300, 20, 20)
-        self.figureList.append(randomFigure)
+        self.map.addFigure(self.player)
 
         self.initWindow()
 
     def initWindow(self):
-        self.window = pygame.display.set_mode((self.map.width, self.map.height))
         pygame.display.set_caption(self.title)
 
     def movePlayer(self):
@@ -38,13 +34,8 @@ class Game:
         self.player.move(move, self.map)
 
     def refreshScreen(self):
-        self.window.fill((0, 0, 0))
-        self.drawFigures()
+        self.map.draw()
         pygame.display.update()
-
-    def drawFigures(self):
-        for figure in self.figureList:
-            figure.draw(self.window)
 
     def play(self):
         run = True
