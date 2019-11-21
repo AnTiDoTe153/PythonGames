@@ -1,6 +1,6 @@
 import pygame
 from figure import Figure
-from movableFigure import MovableFigure
+from player import Player
 from direction import Direction
 from gameMap import GameMap
 
@@ -8,10 +8,9 @@ class Game:
 
     def __init__(self):
         pygame.init()
-        self.figureList = []
         self.title = "FirstGame"
         self.map = GameMap(500, 500)
-        self.player = MovableFigure(50, 50, 50, 50, 5)
+        self.player = Player(50, 50, 50, 50, 5)
         self.map.addFigure(self.player)
 
         self.initWindow()
@@ -19,7 +18,7 @@ class Game:
     def initWindow(self):
         pygame.display.set_caption(self.title)
 
-    def movePlayer(self):
+    def handleKeys(self):
         keys = pygame.key.get_pressed()
         move = None
         if keys[pygame.K_LEFT]:
@@ -30,8 +29,12 @@ class Game:
             move = Direction.DOWN
         if keys[pygame.K_UP]:
             move = Direction.UP
-        
-        self.player.move(move, self.map)
+
+        if move != None:
+            self.player.move(move, self.map)
+
+        if keys[pygame.K_SPACE]:
+            self.player.shoot(self.map)
 
     def refreshScreen(self):
         self.map.draw()
@@ -45,6 +48,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     run = False
 
-            self.movePlayer()
+            self.handleKeys()
+            self.map.update()
             self.refreshScreen()
         pygame.quit()       

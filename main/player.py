@@ -1,14 +1,20 @@
 from direction import Direction
 from figure import Figure
 from gameMap import GameMap
+from bullet import Bullet
 
-class MovableFigure(Figure):
+class Player(Figure):
     def __init__(self, pozX, pozY, width, height, speed):
         super().__init__(pozX, pozY, width, height)
         self.speed = speed
 
     def move(self, direction, map):
         self.moveOnDirection(direction, map)
+
+
+    def shoot(self, map):
+        bullet = Bullet(self.pozX, self.pozY, Direction.RIGHT)
+        map.addFigure(bullet)
 
     def moveOnDirection(self, direction, map):
         if direction == Direction.UP:
@@ -21,8 +27,6 @@ class MovableFigure(Figure):
             self.pozX += self.speed
 
         self.correctPosition(map)
-
-    
 
     def correctPosition(self, map):
         self.pozY = max(0, self.pozY)

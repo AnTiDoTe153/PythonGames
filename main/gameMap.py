@@ -7,6 +7,10 @@ class GameMap():
         self.width = width
         self.figures = []
 
+    def update(self):
+        for figure in self.figures:
+            figure.update(self)
+
     def draw(self):
         self.window.fill((0, 0, 0))
         for figure in self.figures:
