@@ -1,5 +1,6 @@
 from direction import Direction
 from figure import Figure
+import pygame
 
 class Bullet(Figure):
 
@@ -7,6 +8,9 @@ class Bullet(Figure):
         super().__init__(pozX, pozY, 20, 20)
         self.direction = direction
         self.speed = speed
+
+    def draw(self, window):
+        pygame.draw.rect(window, self.color, (self.pozX, self.pozY, self.width, self.height))
 
     def update(self, map):
         if self.direction == Direction.LEFT:
