@@ -16,7 +16,7 @@ class Player(Figure):
     def shoot(self, map):
         
         if self.shootDelay == 0:
-            bullet = Bullet(self.pozX, self.pozY, self.direction)
+            bullet = Bullet(self.pozX + self.height // 2, self.pozY + self.width // 2, self.direction)
             map.addFigure(bullet)
             self.shootDelay = 10
         else:
@@ -26,8 +26,10 @@ class Player(Figure):
     def moveOnDirection(self, direction, map):
         if direction == Direction.UP:
             self.pozY -= self.speed
+            self.direction = Direction.UP
         if direction == Direction.DOWN:
             self.pozY += self.speed
+            self.direction = Direction.DOWN
         if direction == Direction.LEFT:
             self.pozX -= self.speed
             self.direction = Direction.LEFT
