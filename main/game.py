@@ -21,19 +21,33 @@ class Game:
     def handleKeys(self):
         keys = pygame.key.get_pressed()
         move = None
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_a]:
             move = Direction.LEFT
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_d]:
             move = Direction.RIGHT
-        if keys[pygame.K_DOWN]:
+        if keys[pygame.K_s]:
             move = Direction.DOWN
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_w]:
             move = Direction.UP
 
         if move != None:
             self.player.move(move, self.map)
 
-        if keys[pygame.K_SPACE]:
+        shoot = False
+        if keys[pygame.K_LEFT]:
+            self.player.setDirection(Direction.LEFT)
+            shoot = True
+        if keys[pygame.K_RIGHT]:
+            self.player.setDirection(Direction.RIGHT)
+            shoot = True
+        if keys[pygame.K_DOWN]:
+            self.player.setDirection(Direction.DOWN)
+            shoot = True
+        if keys[pygame.K_UP]:
+            self.player.setDirection(Direction.UP)
+            shoot = True
+
+        if shoot:
             self.player.shoot(self.map)
 
     def refreshScreen(self):

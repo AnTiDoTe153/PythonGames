@@ -14,14 +14,12 @@ class Player(Figure):
         self.moveOnDirection(direction, map)
 
     def shoot(self, map):
-        
         if self.shootDelay == 0:
             bullet = Bullet(self.pozX + self.height // 2, self.pozY + self.width // 2, self.direction)
             map.addFigure(bullet)
             self.shootDelay = 10
         else:
             self.shootDelay -= 1
-        
 
     def moveOnDirection(self, direction, map):
         if direction == Direction.UP:
@@ -38,6 +36,9 @@ class Player(Figure):
             self.direction = Direction.RIGHT
 
         self.correctPosition(map)
+
+    def setDirection(self, direction):
+        self.direction = direction
 
     def correctPosition(self, map):
         self.pozY = max(0, self.pozY)
