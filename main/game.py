@@ -3,6 +3,7 @@ from figure import Figure
 from player import Player
 from direction import Direction
 from gameMap import GameMap
+from target import Target
 
 class Game:
 
@@ -12,6 +13,9 @@ class Game:
         self.map = GameMap(500, 500)
         self.player = Player(50, 50, 50, 50, 5)
         self.map.addFigure(self.player)
+
+        for i in range(10):
+            self.map.addFigure(Target(self.map))
 
         self.initWindow()
 
