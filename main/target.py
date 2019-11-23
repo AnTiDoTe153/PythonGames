@@ -17,4 +17,4 @@ class Target(Figure):
         super().__init__(map, pozX, pozY, Target.targetWidth, Target.targetHeight)
 
     def onCollision(self, figure):
-        print("Hit!")
+        self.map.removeFigure(self)

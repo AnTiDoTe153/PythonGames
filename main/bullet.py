@@ -33,4 +33,5 @@ class Bullet(Figure):
             self.map.removeFigure(self)
             return
 
+    
 
