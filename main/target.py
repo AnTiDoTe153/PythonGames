@@ -14,4 +14,4 @@ class Target(Figure):
         pozX = random.randrange(0, map.width - Target.targetWidth)
         pozY = random.randrange(0, map.height - Target.targetHeight)
         super().__init__(pozX, pozY, Target.targetWidth, Target.targetHeight)
-    
+
