@@ -2,7 +2,7 @@ import pygame
 
 class Figure:
 
-    def __init__(self, map, pozX, pozY, width, height, color = (255, 0, 0)):
+    def __init__(self, map, pozX, pozY, width, height, color = (220,20,60)):
         self.map = map
         self.pozX = pozX
         self.pozY = pozY
