@@ -11,7 +11,7 @@ class Game:
         pygame.init()
         self.title = "FirstGame"
         self.map = GameMap(500, 500)
-        self.player = Player(50, 50, 50, 50, 5)
+        self.player = Player(self.map, 50, 50, 50, 50, 5)
         self.map.addFigure(self.player)
 
         for i in range(1):
@@ -35,7 +35,7 @@ class Game:
             move = Direction.UP
 
         if move != None:
-            self.player.move(move, self.map)
+            self.player.move(move)
 
         shoot = False
         if keys[pygame.K_LEFT]:
@@ -52,7 +52,7 @@ class Game:
             shoot = True
 
         if shoot:
-            self.player.shoot(self.map)
+            self.player.shoot()
 
     def refreshScreen(self):
         self.map.draw()

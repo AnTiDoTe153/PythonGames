@@ -1,19 +1,20 @@
 from direction import Direction
 from figure import Figure
+from gameMap import GameMap
 import pygame
 
 class Bullet(Figure):
 
-    def __init__(self, pozX, pozY, direction, speed = 5):
-        super().__init__(pozX, pozY, 20, 20, (255, 255, 0))
+    def __init__(self, map, pozX, pozY, direction, speed = 5):
+        super().__init__(map, pozX, pozY, 20, 20, (255, 255, 0))
         self.direction = direction
         self.speed = speed
         self.cnt = 0
 
-    def draw(self, window):
-        pygame.draw.circle(window, self.color, (self.pozX, self.pozY), 6)
+    def draw(self):
+        pygame.draw.circle(self.map.window, self.color, (self.pozX, self.pozY), 6)
 
-    def update(self, map):
+    def update(self):
         if self.direction == Direction.LEFT:
             self.pozX -= self.speed
         elif self.direction == Direction.RIGHT:
@@ -23,10 +24,13 @@ class Bullet(Figure):
         elif self.direction == Direction.DOWN:
             self.pozY += self.speed
 
-        if self.pozX <= 0 or self.pozX >= map.width - self.width:
-            map.removeFigure(self)
+        self.checkCollision()
+
+        if self.pozX <= 0 or self.pozX >= self.map.width - self.width:
+            self.map.removeFigure(self)
             return
-        if self.pozY <= 0 or self.pozY >= map.height - self.height:
-            map.removeFigure(self)
+        if self.pozY <= 0 or self.pozY >= self.map.height - self.height:
+            self.map.removeFigure(self)
             return
+
 
