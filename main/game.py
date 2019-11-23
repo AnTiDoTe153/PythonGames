@@ -4,8 +4,25 @@ from player import Player
 from direction import Direction
 from gameMap import GameMap
 from target import Target
+from observer import Observer
+from event import Event
 
-class Game:
+class Game(Observer):
+    maxTargetCount = 4
+
+    def notify(self, eventData = None):
+        self.targetCount -= 1
+        if self.targetCount <= 0:
+            self.resetTargets()
+
+    def resetTargets(self):
+        self.targetCount = Game.maxTargetCount
+
+        for i in range(self.targetCount):
+            target = Target(self.map)
+            target.subscribe(self)
+            self.map.addFigure(target)
+
 
     def __init__(self):
         pygame.init()
@@ -14,9 +31,7 @@ class Game:
         self.player = Player(self.map, 50, 50, 50, 50, 5)
         self.map.addFigure(self.player)
 
-        for i in range(1):
-            self.map.addFigure(Target(self.map))
-
+        self.resetTargets()
         self.initWindow()
 
     def initWindow(self):
