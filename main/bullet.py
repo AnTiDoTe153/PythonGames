@@ -8,6 +8,7 @@ class Bullet(Figure):
         super().__init__(pozX, pozY, 20, 20, (255, 255, 0))
         self.direction = direction
         self.speed = speed
+        self.cnt = 0
 
     def draw(self, window):
         pygame.draw.circle(window, self.color, (self.pozX, self.pozY), 6)
@@ -26,3 +27,8 @@ class Bullet(Figure):
             map.removeFigure(self)
         if self.pozY <= 0 or self.pozY >= map.height - self.height:
             map.removeFigure(self)
+
+        target = map.checkCollision(self)
+        if target != None:
+            self.cnt += 1
+            print("Target hit: " + str(self.cnt))

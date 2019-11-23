@@ -12,5 +12,8 @@ class Figure:
     def draw(self, window):
         pygame.draw.rect(window, self.color, (self.pozX, self.pozY, self.width, self.height))
 
+    def onHit(self, source):
+        pass
+
     def update(self, map):
         pass
