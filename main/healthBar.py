@@ -1,4 +1,5 @@
 from figure import Figure
+import math
 
 class HealthBar(Figure):
 
@@ -9,7 +10,7 @@ class HealthBar(Figure):
         width = target.width * 1.5
         height = target.height * 0.25
         
-        pozY = target.pozY - (target.height // 2 + target.height * 0.3)
+        pozY = target.pozY - (target.height / 2 + target.height * 0.3)
         pozX = target.pozX
 
         super().__init__(target.map, pozX, pozY, width, height, HealthBar.healthColor)
@@ -23,12 +24,16 @@ class HealthBar(Figure):
         self.damageBar = self.initDamageBar()
 
     def initDamageBar(self):
-        damageWidth = ((self.maxHealth - self.currentHealth) * self.width) / self.maxHealth
-        damagePoz = self.pozX + self.width / 2 - damageWidth / 2
-        damageBar = Figure(self.map, damagePoz, self.pozY, damageWidth, self.height, HealthBar.damageColor)
+        if self.currentHealth == self.maxHealth:
+            damageBar = None
+        else:
+            damageWidth = math.ceil(((self.maxHealth - self.currentHealth) * self.width) / self.maxHealth)
+            damagePoz = math.ceil(self.pozX + self.width / 2 - damageWidth / 2)
+            damageBar = Figure(self.map, damagePoz, self.pozY, damageWidth, self.height, HealthBar.damageColor)
         return damageBar
 
     def draw(self):
         super().draw()
-        self.damageBar.draw()
+        if self.damageBar != None:
+            self.damageBar.draw()
         
