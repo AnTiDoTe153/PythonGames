@@ -37,3 +37,4 @@ class Target(Figure, Event):
                 self.notify(None)
             else:
                 self.health -= 10
+                self.healthBar.takeDamage(10)
