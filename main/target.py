@@ -8,6 +8,7 @@ class Target(Figure, Event):
     
     targetHeight = 30
     targetWidth = 30
+    maxHealth = 100
 
     def __init__(self, map, pozX = None, pozY = None):
         Event.__init__(self)
@@ -18,9 +19,13 @@ class Target(Figure, Event):
 
         Figure.__init__(self, map, pozX, pozY, Target.targetWidth, Target.targetHeight)
 
+        self.health = Target.maxHealth
 
     def onCollision(self, figure):
         if isinstance(figure, Bullet):
-            self.map.removeFigure(self)
             self.map.removeFigure(figure)
-            self.notify(None)
+            if self.health <= 0:
+                self.map.removeFigure(self)
+                self.notify(None)
+            else:
+                self.health -= 10
