@@ -32,6 +32,5 @@ class Bullet(Figure):
         if self.pozY <= 0 or self.pozY >= self.map.height - self.height:
             self.map.removeFigure(self)
             return
-
     
 

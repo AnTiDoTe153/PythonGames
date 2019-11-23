@@ -15,10 +15,12 @@ class Target(Figure, Event):
             pozX = random.randrange(0, map.width - Target.targetWidth)
         if pozY == None:
            pozY = random.randrange(0, map.height - Target.targetHeight)
-            
+
         Figure.__init__(self, map, pozX, pozY, Target.targetWidth, Target.targetHeight)
 
 
     def onCollision(self, figure):
-        self.map.removeFigure(self)
-        self.notify(None)
+        if isinstance(figure, Bullet):
+            self.map.removeFigure(self)
+            self.map.removeFigure(figure)
+            self.notify(None)
