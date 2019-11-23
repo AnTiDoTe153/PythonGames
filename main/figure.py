@@ -10,7 +10,7 @@ class Figure:
         self.color = color
     
     def draw(self, window):
-        pygame.draw.rect(window, self.color, (self.pozX, self.pozY, self.width, self.height))
+        pygame.draw.rect(window, self.color, (self.pozX - self.width // 2, self.pozY - self.height // 2, self.width, self.height))
 
     def onHit(self, source):
         pass

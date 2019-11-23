@@ -15,7 +15,7 @@ class Player(Figure):
 
     def shoot(self, map):
         if self.shootDelay == 0:
-            bullet = Bullet(self.pozX + self.height // 2, self.pozY + self.width // 2, self.direction)
+            bullet = Bullet(self.pozX, self.pozY, self.direction)
             map.addFigure(bullet)
             self.shootDelay = 10
         else:
@@ -41,8 +41,8 @@ class Player(Figure):
         self.direction = direction
 
     def correctPosition(self, map):
-        self.pozY = max(0, self.pozY)
-        self.pozY = min(map.height - self.height, self.pozY)
+        self.pozY = max(self.height // 2, self.pozY)
+        self.pozY = min(map.height - self.height // 2, self.pozY)
 
-        self.pozX = max(0, self.pozX)
-        self.pozX = min(map.width - self.width, self.pozX)
+        self.pozX = max(self.width // 2, self.pozX)
+        self.pozX = min(map.width - self.width // 2, self.pozX)
