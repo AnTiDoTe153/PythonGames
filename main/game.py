@@ -14,7 +14,7 @@ class Game:
         self.player = Player(50, 50, 50, 50, 5)
         self.map.addFigure(self.player)
 
-        for i in range(2):
+        for i in range(1):
             self.map.addFigure(Target(self.map))
 
         self.initWindow()

@@ -7,10 +7,12 @@ class GameMap():
         self.width = width
         self.figures = []
 
-    def checkCollision(self, source):
-        for figure in self.figures:
-            if figure != source and GameMap.collisionTest(source, figure):
-                return figure
+    def checkCollision(self):
+        for i in range(len(self.figures - 1)):
+            for j in range(i + 1, self.figures):
+                if GameMap.collisionTest(figures[i], figures[j]):
+                    figures[i].onCollision(figures[j])
+                    figures[j].onCollision(figures[i])
 
         return None            
 

@@ -25,10 +25,8 @@ class Bullet(Figure):
 
         if self.pozX <= 0 or self.pozX >= map.width - self.width:
             map.removeFigure(self)
+            return
         if self.pozY <= 0 or self.pozY >= map.height - self.height:
             map.removeFigure(self)
+            return
 
-        target = map.checkCollision(self)
-        if target != None:
-            self.cnt += 1
-            print("Target hit: " + str(self.cnt))

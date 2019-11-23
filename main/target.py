@@ -4,8 +4,8 @@ import random
 
 class Target(Figure):
     
-    targetHeight = 10
-    targetWidth = 10
+    targetHeight = 30
+    targetWidth = 30
 
     def __init__(self, pozX, pozY):
         super().__init__(pozX, pozY, Target.targetWidth, Target.targetHeight)

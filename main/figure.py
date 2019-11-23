@@ -12,7 +12,7 @@ class Figure:
     def draw(self, window):
         pygame.draw.rect(window, self.color, (self.pozX - self.width // 2, self.pozY - self.height // 2, self.width, self.height))
 
-    def onHit(self, source):
+    def onCollision(self, source):
         pass
 
     def update(self, map):
