@@ -26,7 +26,8 @@ class Target(Figure, Event):
         self.healthBar = HealthBar(self, self.health)
 
     def draw(self):
-        self.healthBar.draw()
+        if(self.health < self.maxHealth):
+            self.healthBar.draw()
         super().draw()
 
     def onCollision(self, figure):
