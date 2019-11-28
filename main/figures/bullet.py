@@ -1,6 +1,6 @@
-from direction import Direction
-from figure import Figure
-from gameMap import GameMap
+from figures.figure import Figure
+from map.direction import Direction
+from map.gameMap import GameMap
 import pygame
 
 class Bullet(Figure):

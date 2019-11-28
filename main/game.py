@@ -1,9 +1,11 @@
 import pygame
-from figure import Figure
-from player import Player
-from direction import Direction
-from gameMap import GameMap
-from target import Target
+from figures.figure import Figure
+from figures.player import Player
+from figures.target import Target
+
+from map.direction import Direction
+from map.gameMap import GameMap
+
 from observer import Observer
 from event import Event
 

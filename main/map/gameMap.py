@@ -1,4 +1,4 @@
-from figure import Figure
+from figures.figure import Figure
 import pygame
 
 class GameMap():

@@ -1,7 +1,7 @@
-from direction import Direction
-from figure import Figure
-from gameMap import GameMap
-from bullet import Bullet
+from figures.figure import Figure
+from figures.bullet import Bullet
+from map.direction import Direction
+from map.gameMap import GameMap
 
 class Player(Figure):
     def __init__(self, map, pozX, pozY, width, height, speed):

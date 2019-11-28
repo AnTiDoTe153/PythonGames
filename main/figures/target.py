@@ -1,8 +1,8 @@
-from figure import Figure
-from gameMap import GameMap
-from bullet import Bullet
+from figures.figure import Figure
+from figures.healthBar import HealthBar
+from figures.bullet import Bullet
+from map.gameMap import GameMap
 from event import Event
-from healthBar import HealthBar
 
 import random
 
