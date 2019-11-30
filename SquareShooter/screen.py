@@ -36,9 +36,7 @@ class Screen():
     def refresh(self):
 
         self.refreshTopBar()
-        self.map.draw()
-
-        self.screen.blit(self.screen, (0, 0))
+        self.map.draw() 
 
         pygame.display.update()
 
