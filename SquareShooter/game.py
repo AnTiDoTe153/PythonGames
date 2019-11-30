@@ -18,7 +18,7 @@ class Game(Observer):
         self.title = "FirstGame"
         self.score = 0
 
-        self.screen = Screen(500, 500)
+        self.screen = Screen(800, 800)
         self.map = self.screen.map
         self.player = Player(self.map, 50, 50, 50, 50, 5)
         self.map.addFigure(self.player)
