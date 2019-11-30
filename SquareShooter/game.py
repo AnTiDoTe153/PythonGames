@@ -59,21 +59,27 @@ class Game(Observer):
         if move != None:
             self.player.move(move)
 
-        shoot = False
-        if keys[pygame.K_LEFT]:
-            self.player.setDirection(Direction.LEFT)
-            shoot = True
-        if keys[pygame.K_RIGHT]:
-            self.player.setDirection(Direction.RIGHT)
-            shoot = True
-        if keys[pygame.K_DOWN]:
-            self.player.setDirection(Direction.DOWN)
-            shoot = True
-        if keys[pygame.K_UP]:
-            self.player.setDirection(Direction.UP)
-            shoot = True
+        shootDirection = None
+        if keys[pygame.K_LEFT] and keys[pygame.K_UP]:
+            shootDirection = Direction.LEFT_UP
+        elif keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
+            shootDirection = Direction.LEFT_DOWN
+        elif keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+            shootDirection = Direction.RIGHT_DOWN
+        elif keys[pygame.K_RIGHT] and keys[pygame.K_UP]:
+            shootDirection = Direction.RIGHT_UP
+        elif keys[pygame.K_LEFT]:
+            shootDirection = Direction.LEFT
+        elif keys[pygame.K_RIGHT]:
+            shootDirection = Direction.RIGHT
+        elif keys[pygame.K_DOWN]:
+            shootDirection = Direction.DOWN
+        elif keys[pygame.K_UP]:
+            shootDirection = Direction.UP
+        
 
-        if shoot:
+        if shootDirection != None:
+            self.player.setDirection(shootDirection)
             self.player.shoot()
 
 

@@ -23,6 +23,18 @@ class Bullet(Figure):
             self.pozY -= self.speed
         elif self.direction == Direction.DOWN:
             self.pozY += self.speed
+        elif self.direction == Direction.LEFT_UP:
+            self.pozX -= self.speed
+            self.pozY -= self.speed
+        elif self.direction == Direction.LEFT_DOWN:
+            self.pozX -= self.speed
+            self.pozY += self.speed
+        elif self.direction == Direction.RIGHT_UP:
+            self.pozX += self.speed
+            self.pozY -= self.speed
+        elif self.direction == Direction.RIGHT_DOWN:
+            self.pozX += self.speed
+            self.pozY += self.speed
 
         self.checkCollision()
 

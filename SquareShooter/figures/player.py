@@ -25,13 +25,13 @@ class Player(Figure):
         if direction == Direction.UP:
             self.pozY -= self.speed
             self.direction = Direction.UP
-        if direction == Direction.DOWN:
+        elif direction == Direction.DOWN:
             self.pozY += self.speed
             self.direction = Direction.DOWN
-        if direction == Direction.LEFT:
+        elif direction == Direction.LEFT:
             self.pozX -= self.speed
             self.direction = Direction.LEFT
-        if direction == Direction.RIGHT:
+        elif direction == Direction.RIGHT:
             self.pozX += self.speed
             self.direction = Direction.RIGHT
 
