@@ -2,10 +2,10 @@ from figures.figure import Figure
 import pygame
 
 class GameMap():
-    def __init__(self, height, width):
-        self.window = pygame.display.set_mode((width, height))
-        self.height = height
-        self.width = width
+    def __init__(self, window):
+        self.window = window
+        self.height = window.get_height()
+        self.width = window.get_width()
         self.figures = []           
 
     def update(self):

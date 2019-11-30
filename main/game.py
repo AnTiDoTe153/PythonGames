@@ -6,11 +6,24 @@ from figures.target import Target
 from map.direction import Direction
 from map.gameMap import GameMap
 
+from screen import Screen
 from observer import Observer
 from event import Event
 
 class Game(Observer):
     maxTargetCount = 4
+
+    def __init__(self):
+        pygame.init()
+        self.title = "FirstGame"
+
+        self.screen = Screen(500, 500)
+        self.map = self.screen.map
+        self.player = Player(self.map, 50, 50, 50, 50, 5)
+        self.map.addFigure(self.player)
+
+        self.resetTargets()
+        self.initWindow()
 
     def notify(self, eventData = None):
         self.targetCount -= 1
@@ -25,16 +38,6 @@ class Game(Observer):
             target.subscribe(self)
             self.map.addFigure(target)
 
-
-    def __init__(self):
-        pygame.init()
-        self.title = "FirstGame"
-        self.map = GameMap(500, 500)
-        self.player = Player(self.map, 50, 50, 50, 50, 5)
-        self.map.addFigure(self.player)
-
-        self.resetTargets()
-        self.initWindow()
 
     def initWindow(self):
         pygame.display.set_caption(self.title)
@@ -71,9 +74,6 @@ class Game(Observer):
         if shoot:
             self.player.shoot()
 
-    def refreshScreen(self):
-        self.map.draw()
-        pygame.display.update()
 
     def play(self):
         run = True
@@ -85,5 +85,5 @@ class Game(Observer):
 
             self.handleKeys()
             self.map.update()
-            self.refreshScreen()
+            self.screen.refresh()
         pygame.quit()       
