@@ -8,6 +8,8 @@ class Screen():
     TOP_BAR_COLOR = (211,211,211)
 
     def __init__(self, width, height):
+        pygame.font.init()
+        self.scoreFont = pygame.font.SysFont('Arial', 20, bold = True)
         self.screen = pygame.display.set_mode((width, height))
 
         topBarHeight = height * 0.1
@@ -21,8 +23,11 @@ class Screen():
         self.map = GameMap(self.mainScreenSurface)
 
 
-    def refreshTopBar(self):
+    def refreshTopBar(self, score):
         self.topBarSurface.fill(Screen.TOP_BAR_COLOR)
+
+        scoreText = self.scoreFont.render('Score: {}'.format(score), False, (0, 0, 0))
+        self.topBarSurface.blit(scoreText, (12, 12))
 
         startPozX = 0
         startPozY = self.topBarSurface.get_height() - Screen.LINE_SIZE + 1
@@ -33,9 +38,9 @@ class Screen():
         pygame.draw.line( self.topBarSurface, Screen.LINE_COLOR, (startPozX, startPozY), (endPozX, endPozY), Screen.LINE_SIZE)  
 
 
-    def refresh(self):
+    def refresh(self, score):
 
-        self.refreshTopBar()
+        self.refreshTopBar(score)
         self.map.draw() 
 
         pygame.display.update()

@@ -16,6 +16,7 @@ class Game(Observer):
     def __init__(self):
         pygame.init()
         self.title = "FirstGame"
+        self.score = 0
 
         self.screen = Screen(500, 500)
         self.map = self.screen.map
@@ -26,6 +27,7 @@ class Game(Observer):
         self.initWindow()
 
     def notify(self, eventData = None):
+        self.score += 10
         self.targetCount -= 1
         if self.targetCount <= 0:
             self.resetTargets()
@@ -85,5 +87,5 @@ class Game(Observer):
 
             self.handleKeys()
             self.map.update()
-            self.screen.refresh()
+            self.screen.refresh(self.score)
         pygame.quit()       
