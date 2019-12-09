@@ -2,6 +2,8 @@ from figures.figure import Figure
 from figures.bullet import Bullet
 from map.direction import Direction
 from map.gameMap import GameMap
+from shootStyle.shootStyle import ShootStyle
+from shootStyle.normalShooting import NormalShooting
 
 class Player(Figure):
     def __init__(self, map, pozX, pozY, width, height, speed):
@@ -9,17 +11,13 @@ class Player(Figure):
         self.speed = speed
         self.shootDelay = 0
         self.direction = Direction.RIGHT
+        self.shootStyle = NormalShooting(self)
 
     def move(self, direction):
         self.moveOnDirection(direction)
 
     def shoot(self):
-        if self.shootDelay == 0:
-            bullet = Bullet(self.map, self.pozX, self.pozY, self.direction)
-            self.map.addFigure(bullet)
-            self.shootDelay = 10
-        else:
-            self.shootDelay -= 1
+        self.shootStyle.shoot()
 
     def moveOnDirection(self, direction):
         if direction == Direction.UP:
