@@ -37,7 +37,7 @@ class Screen():
         endPozX = self.topBarSurface.get_width()
         endPozY = startPozY
 
-        pygame.draw.line( self.topBarSurface, Screen.LINE_COLOR, (startPozX, startPozY), (endPozX, endPozY), Screen.LINE_SIZE)  
+        pygame.draw.line(self.topBarSurface, Screen.LINE_COLOR, (startPozX, startPozY), (endPozX, endPozY), Screen.LINE_SIZE)  
 
 
     def refresh(self, score):
