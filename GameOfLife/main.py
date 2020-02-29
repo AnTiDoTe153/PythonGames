@@ -1,4 +1,5 @@
 import pygame
+import math
 
 class Game:
     def __init__(self):
@@ -117,8 +118,8 @@ class Screen:
         self.grid = grid
 
     def drawGrid(self):
-        cellHeight = self.height / self.grid.height
-        cellWidth = self.width / self.grid.width
+        cellHeight = self.__getCellHeight()
+        cellWidth = self.__getCellWidth()
 
         for i in range(1, self.grid.width):
             pygame.draw.line(self.screen, (211,211,211), (cellWidth * i, 0), (cellWidth * i, self.height))
@@ -131,8 +132,27 @@ class Screen:
                 if self.grid.values[i][j] != 0:
                    pygame.draw.rect(self.screen, (255, 0, 0), (i * cellHeight + 1, j * cellWidth + 1, cellHeight - 1, cellWidth - 1)) 
 
+
+    def __getCellHeight(self):
+        return self.height / self.grid.height
+
+    def __getCellWidth(self):
+        return self.width / self.grid.width
+
+
+    def __getGridPosition(self, pozX, pozY):
+        cellHeight = self.__getCellHeight()
+        cellWidth = self.__getCellWidth()
+
+        i = int(math.floor(pozY / cellHeight))
+        j = int(math.floor(pozX / cellWidth))
+
+        return i , j
+
     def onClick(self, pozX, pozY):
-        print("Click at: " + str(pozX) + ' and ' + str(pozY)) 
+        print("Click at: " + str(pozX) + ' and ' + str(pozY))
+        i, j = self.__getGridPosition(pozX, pozY)
+        print("cell: " + str(i) + ' and ' + str(j))
 
     def update(self):
         self.screen.fill((0, 0, 0))
