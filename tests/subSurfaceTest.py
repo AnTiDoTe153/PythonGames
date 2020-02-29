@@ -25,6 +25,10 @@ def main():
 
     while True:
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+
         pygame.draw.line(sub2, (255,255,255), (0,0), (0,300))
         pygame.draw.line(sub4, (255,255,255), (0,0), (0,300))
         pygame.draw.line(sub3, (255,255,255), (0,0), (400,0))

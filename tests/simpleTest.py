@@ -11,6 +11,10 @@ def main():
     pygame.display.set_caption("Test")
 
     while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+                
         pygame.time.delay(10)
         keys = pygame.key.get_pressed()
 
