@@ -7,6 +7,8 @@ class Game:
 
         self.evolutionDelay = 100
         self.isClicking = False
+        self.isPressingP = False
+        self.pause = True
 
         screenSize = 900
         numberOfCells = 80
@@ -25,14 +27,25 @@ class Game:
                 if event.type == pygame.QUIT:
                     return
 
+            self.handleKeys()
             self.handleClick()
             
-            if generationCnt >= self.evolutionDelay:
+            if generationCnt >= self.evolutionDelay and not self.pause:
                 generationCnt = 0
                 self.grid.nextGeneration()
             
             
             self.screen.update()
+
+    def handleKeys(self):
+        keys = pygame.key.get_pressed()
+
+        if not keys[pygame.K_p] and self.isPressingP:
+            self.isPressingP = False
+
+        if keys[pygame.K_p] and not self.isPressingP:
+            self.isPressingP = True
+            self.pause = not self.pause
 
     def handleClick(self):
         if pygame.mouse.get_pressed()[0] == 0 and self.isClicking == True:
@@ -44,18 +57,12 @@ class Game:
             self.isClicking = True
 
 
-
-
 class Grid:
     def __init__(self, width, height):
         self.width = width
         self.height = height
 
         self.values = self.__createValues()
-
-        self.values[5][5] = 1
-        self.values[5][6] = 1
-        self.values[6][6] = 1
 
     def __createValues(self):
         return [[ 0 for j in range(self.width)] for i in range(self.height)]
