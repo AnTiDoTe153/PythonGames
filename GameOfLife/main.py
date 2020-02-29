@@ -4,6 +4,9 @@ class Game:
     def __init__(self):
         pygame.init()
 
+        self.evolutionDelay = 100
+        self.isClicking = False
+
         screenSize = 900
         numberOfCells = 80
 
@@ -11,14 +14,35 @@ class Game:
         self.screen = Screen(screenSize, screenSize, self.grid)
 
     def play(self):
+        generationCnt = 0
+
         while True:
-            pygame.time.delay(1000)
+            pygame.time.delay(10)
+            generationCnt += 1
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return
 
-            self.grid.nextGeneration()
+            self.handleClick()
+            
+            if generationCnt >= self.evolutionDelay:
+                generationCnt = 0
+                self.grid.nextGeneration()
+            
+            
             self.screen.update()
+
+    def handleClick(self):
+        if pygame.mouse.get_pressed()[0] == 0 and self.isClicking == True:
+            self.isClicking = False
+
+        if pygame.mouse.get_pressed()[0] == 1 and self.isClicking == False:
+            mousePos = pygame.mouse.get_pos()
+            self.screen.onClick(mousePos[0], mousePos[1])
+            self.isClicking = True
+
+
 
 
 class Grid:
@@ -107,6 +131,8 @@ class Screen:
                 if self.grid.values[i][j] != 0:
                    pygame.draw.rect(self.screen, (255, 0, 0), (i * cellHeight + 1, j * cellWidth + 1, cellHeight - 1, cellWidth - 1)) 
 
+    def onClick(self, pozX, pozY):
+        print("Click at: " + str(pozX) + ' and ' + str(pozY)) 
 
     def update(self):
         self.screen.fill((0, 0, 0))
