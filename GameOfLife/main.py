@@ -4,10 +4,11 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        width = 700
-        height = 700
-        self.grid = Grid(5, 5)
-        self.screen = Screen(width, height, self.grid)
+        screenSize = 900
+        numberOfCells = 80
+
+        self.grid = Grid(numberOfCells, numberOfCells)
+        self.screen = Screen(screenSize, screenSize, self.grid)
 
     def play(self):
         while True:
@@ -25,6 +26,8 @@ class Grid:
 
         self.values = [[ 0 for j in range(width)] for i in range(height)]
 
+        self.values[1][1] = 1
+
 
 class Screen:
     def __init__(self, width, height, grid):
@@ -39,10 +42,15 @@ class Screen:
         cellWidth = self.width / self.grid.width
 
         for i in range(1, self.grid.width):
-            pygame.draw.line(self.screen, (255,255,255), (cellWidth * i, 0), (cellWidth * i, self.height))
+            pygame.draw.line(self.screen, (211,211,211), (cellWidth * i, 0), (cellWidth * i, self.height))
 
         for i in range(1, self.grid.height):
-            pygame.draw.line(self.screen, (255,255,255), (0, cellHeight * i), (self.width, cellHeight * i))
+            pygame.draw.line(self.screen, (211,211,211), (0, cellHeight * i), (self.width, cellHeight * i))
+
+        for row in self.grid.values:
+            for value in row:
+                if value != 0:
+                    pygame.draw.rect(self.screen, (255, 0, 0), (cellHeight + 1, cellWidth + 1, cellHeight - 1, cellWidth - 1))
 
 
     def update(self):
