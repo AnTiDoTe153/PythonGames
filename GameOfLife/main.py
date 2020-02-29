@@ -71,7 +71,10 @@ class Grid:
                     myCnt += 1
                 else:
                     nextValues[i][j] = 0
-        self.values = nextValues
+
+        for i in range(self.height):
+            for j in range(self.width):
+                self.values[i][j] = nextValues[i][j]
 
     def __calculateNeighbours(self, i, j):
         moves = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, -1), (-1, 1), (-1, -1), (1, 1)]
@@ -144,15 +147,14 @@ class Screen:
         cellHeight = self.__getCellHeight()
         cellWidth = self.__getCellWidth()
 
-        i = int(math.floor(pozY / cellHeight))
-        j = int(math.floor(pozX / cellWidth))
+        i = int(math.floor(pozX / cellHeight))
+        j = int(math.floor(pozY / cellWidth))
 
         return i , j
 
     def onClick(self, pozX, pozY):
-        print("Click at: " + str(pozX) + ' and ' + str(pozY))
         i, j = self.__getGridPosition(pozX, pozY)
-        print("cell: " + str(i) + ' and ' + str(j))
+        self.grid.values[i][j] = 1
 
     def update(self):
         self.screen.fill((0, 0, 0))
