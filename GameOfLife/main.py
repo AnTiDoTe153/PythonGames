@@ -12,10 +12,12 @@ class Game:
 
     def play(self):
         while True:
-            pygame.time.delay(10)
+            pygame.time.delay(1000)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return
+
+            self.grid.nextGeneration()
             self.screen.update()
 
 
@@ -24,9 +26,62 @@ class Grid:
         self.width = width
         self.height = height
 
-        self.values = [[ 0 for j in range(width)] for i in range(height)]
+        self.values = self.__createValues()
 
-        self.values[1][1] = 1
+        self.values[5][5] = 1
+        self.values[5][6] = 1
+        self.values[6][6] = 1
+
+    def __createValues(self):
+        return [[ 0 for j in range(self.width)] for i in range(self.height)]
+
+    def nextGeneration(self):
+        nextValues = self.__createValues()
+        myCnt = 0
+
+        for i in range(self.height):
+            for j in range(self.width):
+                if(self.__lives(i, j)):
+                    nextValues[i][j] = 1
+                    myCnt += 1
+                else:
+                    nextValues[i][j] = 0
+        self.values = nextValues
+
+    def __calculateNeighbours(self, i, j):
+        moves = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, -1), (-1, 1), (-1, -1), (1, 1)]
+
+        counter = 0
+
+        for move in moves:
+            if self.__isValidPosition(i + move[0], j + move[1]) and self.values[i + move[0]][j + move[1]] > 0:
+                counter += 1
+
+        return counter
+
+    def __lives(self, i, j):
+        cnt = self.__calculateNeighbours(i, j)
+
+        if self.values[i][j] == 0: 
+            if cnt == 3:
+                return True
+            return False
+        
+
+        if cnt < 2:
+            return False
+        if cnt > 3:
+            return False
+
+        return True
+
+    def __isValidPosition(self, i, j):
+        if i < 0 or i >= self.height:
+            return False
+        if j < 0 or j >= self.width:
+            return False
+        
+        return True
 
 
 class Screen:
@@ -47,10 +102,10 @@ class Screen:
         for i in range(1, self.grid.height):
             pygame.draw.line(self.screen, (211,211,211), (0, cellHeight * i), (self.width, cellHeight * i))
 
-        for row in self.grid.values:
-            for value in row:
-                if value != 0:
-                    pygame.draw.rect(self.screen, (255, 0, 0), (cellHeight + 1, cellWidth + 1, cellHeight - 1, cellWidth - 1))
+        for i in range(self.grid.height):
+            for j in range(self.grid.width):
+                if self.grid.values[i][j] != 0:
+                   pygame.draw.rect(self.screen, (255, 0, 0), (i * cellHeight + 1, j * cellWidth + 1, cellHeight - 1, cellWidth - 1)) 
 
 
     def update(self):
