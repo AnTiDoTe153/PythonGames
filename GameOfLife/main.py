@@ -5,14 +5,14 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        self.evolutionDelay = 100
+        self.evolutionDelay = 50
         self.isClicking = False
         self.isPressingP = False
         self.pause = True
         self.totalGenerations = 0
 
         screenSize = 900
-        numberOfCells = 10
+        numberOfCells = 20
 
         self.grid = Grid(numberOfCells, numberOfCells)
         self.screen = Screen(screenSize, screenSize, self.grid)
