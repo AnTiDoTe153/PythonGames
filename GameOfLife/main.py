@@ -11,7 +11,7 @@ class Game:
         self.pause = True
 
         screenSize = 900
-        numberOfCells = 80
+        numberOfCells = 10
 
         self.grid = Grid(numberOfCells, numberOfCells)
         self.screen = Screen(screenSize, screenSize, self.grid)
@@ -120,52 +120,101 @@ class Grid:
 
 
 class Screen:
+
+    TOP_BAR_COLOR = (211,211,211)
+    LINE_COLOR = (128,128,128)
+    LINE_SIZE = 4
+    SCORE_SPAN = 10
+
     def __init__(self, width, height, grid):
         pygame.display.set_caption("Game of Life")
-        self.width = width
-        self.height = height
-        self.screen = pygame.display.set_mode((width, height))
+        self.totalWidth = width
+        self.totalHeight = height
+        self.allScreen = pygame.display.set_mode((width, height))
         self.grid = grid
 
-    def drawGrid(self):
+        pygame.font.init()
+        self.scoreFont = pygame.font.SysFont('Arial', 20, bold = True)
+
+        self.topBarHeight = height * 0.05
+
+        self.height = height * 0.95
+        self.width = width
+
+        topBar = pygame.Rect(0, 0, width, self.topBarHeight)
+        mainScreen = pygame.Rect(0, self.topBarHeight, self.width, self.height)
+
+        self.topBarSurface = self.allScreen.subsurface(topBar)
+        self.screen = self.allScreen.subsurface(mainScreen)
+
+
+    def drawTopBar(self):
+        self.topBarSurface.fill(Screen.TOP_BAR_COLOR)
+
+        topBarText = self.scoreFont.render('Game of life', False, (0, 0, 0))
+        self.topBarSurface.blit(topBarText, (Screen.SCORE_SPAN, Screen.SCORE_SPAN))
+
+        startPozX = 0
+        startPozY = self.topBarSurface.get_height() - Screen.LINE_SIZE + 1
+
+        endPozX = self.topBarSurface.get_width()
+        endPozY = startPozY
+
+        pygame.draw.line(self.topBarSurface, Screen.LINE_COLOR, (startPozX, startPozY), (endPozX, endPozY), Screen.LINE_SIZE)  
+
+
+    def drawMainScreen(self):
+        self.screen.fill((0, 0, 0))
         cellHeight = self.__getCellHeight()
         cellWidth = self.__getCellWidth()
 
         for i in range(1, self.grid.width):
             pygame.draw.line(self.screen, (211,211,211), (cellWidth * i, 0), (cellWidth * i, self.height))
 
-        for i in range(1, self.grid.height):
+        for i in range(0, self.grid.height):
             pygame.draw.line(self.screen, (211,211,211), (0, cellHeight * i), (self.width, cellHeight * i))
 
         for i in range(self.grid.height):
             for j in range(self.grid.width):
                 if self.grid.values[i][j] != 0:
-                   pygame.draw.rect(self.screen, (255, 0, 0), (i * cellHeight + 1, j * cellWidth + 1, cellHeight - 1, cellWidth - 1)) 
+                   pygame.draw.rect(self.screen, (255, 0, 0), (j * cellWidth + 1, i * cellHeight + 1, cellWidth - 1, cellHeight - 1)) 
 
 
     def __getCellHeight(self):
-        return self.height / self.grid.height
+        screenHeight = self.screen.get_height()
+        return screenHeight / self.grid.height
 
     def __getCellWidth(self):
-        return self.width / self.grid.width
+        screenWidth = self.screen.get_width()
+        return screenWidth / self.grid.width
 
 
     def __getGridPosition(self, pozX, pozY):
         cellHeight = self.__getCellHeight()
         cellWidth = self.__getCellWidth()
 
-        i = int(math.floor(pozX / cellHeight))
-        j = int(math.floor(pozY / cellWidth))
+        relativePozY = int(pozY - self.topBarHeight)
+        relativePozX = pozX
+
+
+        print(relativePozY / cellHeight)
+        j = int(math.floor(relativePozX / cellWidth))
+        i = int(math.floor(relativePozY / cellHeight))
 
         return i , j
 
     def onClick(self, pozX, pozY):
         i, j = self.__getGridPosition(pozX, pozY)
+
+        if i < 0 or j < 0:
+            return
+
+        print("Click on: " + str(i) + " and " + str(j))
         self.grid.values[i][j] = 1
 
     def update(self):
-        self.screen.fill((0, 0, 0))
-        self.drawGrid()
+        self.drawMainScreen()
+        self.drawTopBar()
         pygame.display.update()
 
 
