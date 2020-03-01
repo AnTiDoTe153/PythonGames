@@ -1,2 +1,2 @@
 # PythonGames
-Some random games made using PyGame
+A collection of small games developed while learning the basics of PyGame.
