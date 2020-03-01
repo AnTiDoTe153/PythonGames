@@ -235,7 +235,7 @@ class Screen:
 
 
 def main():
-    game = Game(cells = 30)
+    game = Game(cells = 30, screenSize = 750)
     game.play()
 
 if __name__ == '__main__':
