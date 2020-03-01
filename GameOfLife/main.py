@@ -9,6 +9,7 @@ class Game:
         self.isClicking = False
         self.isPressingP = False
         self.pause = True
+        self.totalGenerations = 0
 
         screenSize = 900
         numberOfCells = 10
@@ -32,10 +33,11 @@ class Game:
             
             if generationCnt >= self.evolutionDelay and not self.pause:
                 generationCnt = 0
+                self.totalGenerations += 1
                 self.grid.nextGeneration()
             
             
-            self.screen.update()
+            self.screen.update(self.totalGenerations)
 
     def handleKeys(self):
         keys = pygame.key.get_pressed()
@@ -148,10 +150,10 @@ class Screen:
         self.screen = self.allScreen.subsurface(mainScreen)
 
 
-    def drawTopBar(self):
+    def drawTopBar(self, generation):
         self.topBarSurface.fill(Screen.TOP_BAR_COLOR)
 
-        topBarText = self.scoreFont.render('Game of life', False, (0, 0, 0))
+        topBarText = self.scoreFont.render('Game of life - generation: {}'.format(generation), False, (0, 0, 0))
         self.topBarSurface.blit(topBarText, (Screen.SCORE_SPAN, Screen.SCORE_SPAN))
 
         startPozX = 0
@@ -210,9 +212,9 @@ class Screen:
 
         self.grid.values[i][j] = 1
 
-    def update(self):
+    def update(self, generations):
         self.drawMainScreen()
-        self.drawTopBar()
+        self.drawTopBar(generations)
         pygame.display.update()
 
 
