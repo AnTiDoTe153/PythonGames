@@ -12,7 +12,7 @@ class Game:
         self.totalGenerations = 0
 
         screenSize = 900
-        numberOfCells = 20
+        numberOfCells = 30
 
         self.grid = Grid(numberOfCells, numberOfCells)
         self.screen = Screen(screenSize, screenSize, self.grid)
@@ -216,7 +216,10 @@ class Screen:
         if i < 0 or j < 0:
             return
 
-        self.grid.values[i][j] = 1
+        if self.grid.values[i][j] == 1:
+            self.grid.values[i][j] = 0
+        else:
+            self.grid.values[i][j] = 1
 
 
     def update(self, generations, pause):
