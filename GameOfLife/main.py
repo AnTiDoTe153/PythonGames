@@ -186,17 +186,21 @@ class Screen:
         for i in range(self.grid.height):
             for j in range(self.grid.width):
                 if self.grid.values[i][j] != 0:
-                   pygame.draw.rect(self.mainScreen, Screen.CELL_COLOR, (j * cellWidth + 1, i * cellHeight + 1, cellWidth - 1, cellHeight - 1)) 
+                   pygame.draw.rect(self.mainScreen, Screen.CELL_COLOR, (j * cellWidth + 1, i * cellHeight + 1, cellWidth - 1, cellHeight - 1))
+
+        heightDifference = self.mainScreen.get_height() - cellHeight * self.grid.height
+        borderHeightPoz = cellHeight * self.grid.height + heightDifference / 2
+        pygame.draw.line(self.mainScreen, Screen.GRID_COLOR, (0, borderHeightPoz), (self.width, borderHeightPoz), heightDifference)
 
 
     def __getCellHeight(self):
         screenHeight = self.mainScreen.get_height()
-        return screenHeight / self.grid.height
+        return math.floor(screenHeight / self.grid.height)
 
 
     def __getCellWidth(self):
         screenWidth = self.mainScreen.get_width()
-        return screenWidth / self.grid.width
+        return math.floor(screenWidth / self.grid.width)
 
 
     def __getGridPosition(self, pozX, pozY):
@@ -215,7 +219,7 @@ class Screen:
     def onClick(self, pozX, pozY):
         i, j = self.__getGridPosition(pozX, pozY)
 
-        if i < 0 or j < 0:
+        if i < 0 or j < 0 or i >= self.grid.height or j >= self.grid.width:
             return
 
         if self.grid.values[i][j] == 1:
