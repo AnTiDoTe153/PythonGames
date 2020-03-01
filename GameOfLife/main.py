@@ -37,7 +37,7 @@ class Game:
                 self.grid.nextGeneration()
             
             
-            self.screen.update(self.totalGenerations)
+            self.screen.update(self.totalGenerations, self.pause)
 
     def handleKeys(self):
         keys = pygame.key.get_pressed()
@@ -150,10 +150,14 @@ class Screen:
         self.screen = self.allScreen.subsurface(mainScreen)
 
 
-    def drawTopBar(self, generation):
+    def drawTopBar(self, generation, pause):
         self.topBarSurface.fill(Screen.TOP_BAR_COLOR)
 
-        topBarText = self.scoreFont.render('Game of life - generation: {}'.format(generation), False, (0, 0, 0))
+        displayMessage = 'Game of life - generation: {}'.format(generation)
+        if pause:
+            displayMessage += ' (paused)'
+
+        topBarText = self.scoreFont.render(displayMessage, False, (0, 0, 0))
         self.topBarSurface.blit(topBarText, (Screen.SCORE_SPAN, Screen.SCORE_SPAN))
 
         startPozX = 0
@@ -186,6 +190,7 @@ class Screen:
         screenHeight = self.screen.get_height()
         return screenHeight / self.grid.height
 
+
     def __getCellWidth(self):
         screenWidth = self.screen.get_width()
         return screenWidth / self.grid.width
@@ -204,6 +209,7 @@ class Screen:
 
         return i , j
 
+
     def onClick(self, pozX, pozY):
         i, j = self.__getGridPosition(pozX, pozY)
 
@@ -212,9 +218,10 @@ class Screen:
 
         self.grid.values[i][j] = 1
 
-    def update(self, generations):
+
+    def update(self, generations, pause):
         self.drawMainScreen()
-        self.drawTopBar(generations)
+        self.drawTopBar(generations, pause)
         pygame.display.update()
 
 
