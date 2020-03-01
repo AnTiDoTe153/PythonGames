@@ -36,7 +36,6 @@ class Game:
                 self.totalGenerations += 1
                 self.grid.nextGeneration()
             
-            
             self.screen.update(self.totalGenerations, self.pause)
 
     def handleKeys(self):
@@ -123,11 +122,13 @@ class Grid:
 
 class Screen:
 
-    TOP_BAR_COLOR = (211,211,211)
+    BACKGROUND_COLOR = (211,211,211)
+    TOP_BAR_COLOR = (190,190,190)
     LINE_COLOR = (128,128,128)
+    GRID_COLOR = (128,128,128)
+    CELL_COLOR = (0, 0, 0)
+
     LINE_SIZE = 4
-    GRID_COLOR = (211,211,211)
-    CELL_COLOR = (255, 0, 0)
     SCORE_SPAN = 10
 
     def __init__(self, width, height, grid):
@@ -172,7 +173,7 @@ class Screen:
 
 
     def drawMainScreen(self):
-        self.mainScreen.fill((0, 0, 0))
+        self.mainScreen.fill(Screen.BACKGROUND_COLOR)
         cellHeight = self.__getCellHeight()
         cellWidth = self.__getCellWidth()
 
@@ -230,7 +231,7 @@ class Screen:
 
 
 def main():
-    game = Game()
+    game = Game(cells = 30)
     game.play()
 
 if __name__ == '__main__':
