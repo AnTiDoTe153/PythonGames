@@ -2,17 +2,17 @@ import pygame
 import math
 
 class Game:
-    def __init__(self):
+    def __init__(self, screenSize = 900, cells = 30, evolutionDelay = 50):
         pygame.init()
 
-        self.evolutionDelay = 50
+        self.evolutionDelay = evolutionDelay
         self.isClicking = False
         self.isPressingP = False
         self.pause = True
         self.totalGenerations = 0
 
-        screenSize = 900
-        numberOfCells = 30
+        screenSize = screenSize
+        numberOfCells = cells
 
         self.grid = Grid(numberOfCells, numberOfCells)
         self.screen = Screen(screenSize, screenSize, self.grid)
@@ -126,6 +126,8 @@ class Screen:
     TOP_BAR_COLOR = (211,211,211)
     LINE_COLOR = (128,128,128)
     LINE_SIZE = 4
+    GRID_COLOR = (211,211,211)
+    CELL_COLOR = (255, 0, 0)
     SCORE_SPAN = 10
 
     def __init__(self, width, height, grid):
@@ -147,7 +149,7 @@ class Screen:
         mainScreen = pygame.Rect(0, self.topBarHeight, self.width, self.height)
 
         self.topBarSurface = self.allScreen.subsurface(topBar)
-        self.screen = self.allScreen.subsurface(mainScreen)
+        self.mainScreen = self.allScreen.subsurface(mainScreen)
 
 
     def drawTopBar(self, generation, pause):
@@ -170,29 +172,29 @@ class Screen:
 
 
     def drawMainScreen(self):
-        self.screen.fill((0, 0, 0))
+        self.mainScreen.fill((0, 0, 0))
         cellHeight = self.__getCellHeight()
         cellWidth = self.__getCellWidth()
 
         for i in range(1, self.grid.width):
-            pygame.draw.line(self.screen, (211,211,211), (cellWidth * i, 0), (cellWidth * i, self.height))
+            pygame.draw.line(self.mainScreen, Screen.GRID_COLOR, (cellWidth * i, 0), (cellWidth * i, self.height))
 
         for i in range(0, self.grid.height):
-            pygame.draw.line(self.screen, (211,211,211), (0, cellHeight * i), (self.width, cellHeight * i))
+            pygame.draw.line(self.mainScreen, Screen.GRID_COLOR, (0, cellHeight * i), (self.width, cellHeight * i))
 
         for i in range(self.grid.height):
             for j in range(self.grid.width):
                 if self.grid.values[i][j] != 0:
-                   pygame.draw.rect(self.screen, (255, 0, 0), (j * cellWidth + 1, i * cellHeight + 1, cellWidth - 1, cellHeight - 1)) 
+                   pygame.draw.rect(self.mainScreen, Screen.CELL_COLOR, (j * cellWidth + 1, i * cellHeight + 1, cellWidth - 1, cellHeight - 1)) 
 
 
     def __getCellHeight(self):
-        screenHeight = self.screen.get_height()
+        screenHeight = self.mainScreen.get_height()
         return screenHeight / self.grid.height
 
 
     def __getCellWidth(self):
-        screenWidth = self.screen.get_width()
+        screenWidth = self.mainScreen.get_width()
         return screenWidth / self.grid.width
 
 
@@ -202,7 +204,6 @@ class Screen:
 
         relativePozY = int(pozY - self.topBarHeight)
         relativePozX = pozX
-
 
         j = int(math.floor(relativePozX / cellWidth))
         i = int(math.floor(relativePozY / cellHeight))
