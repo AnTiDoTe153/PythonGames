@@ -197,7 +197,6 @@ class Screen:
         relativePozX = pozX
 
 
-        print(relativePozY / cellHeight)
         j = int(math.floor(relativePozX / cellWidth))
         i = int(math.floor(relativePozY / cellHeight))
 
@@ -209,7 +208,6 @@ class Screen:
         if i < 0 or j < 0:
             return
 
-        print("Click on: " + str(i) + " and " + str(j))
         self.grid.values[i][j] = 1
 
     def update(self):
