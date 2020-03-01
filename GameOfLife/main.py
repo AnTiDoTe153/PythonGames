@@ -190,7 +190,7 @@ class Screen:
 
         heightDifference = self.mainScreen.get_height() - cellHeight * self.grid.height
         borderHeightPoz = cellHeight * self.grid.height + heightDifference / 2
-        pygame.draw.line(self.mainScreen, Screen.GRID_COLOR, (0, borderHeightPoz), (self.width, borderHeightPoz), heightDifference)
+        pygame.draw.line(self.mainScreen, Screen.GRID_COLOR, (0, borderHeightPoz), (self.width, borderHeightPoz), int(math.ceil(heightDifference)))
 
 
     def __getCellHeight(self):
