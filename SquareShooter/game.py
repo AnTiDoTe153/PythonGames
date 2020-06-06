@@ -48,34 +48,26 @@ class Game(Observer):
         keys = pygame.key.get_pressed()
         move = None
         if keys[pygame.K_a]:
-            move = Direction.LEFT
-        if keys[pygame.K_d]:
-            move = Direction.RIGHT
-        if keys[pygame.K_s]:
-            move = Direction.DOWN
-        if keys[pygame.K_w]:
-            move = Direction.UP
+            move = Direction(-1, 0) # move left
+        elif keys[pygame.K_d]:
+            move = Direction(1, 0) # move right
+        elif keys[pygame.K_s]:
+            move = Direction(0, 1) # move down
+        elif keys[pygame.K_w]:
+            move = Direction(0, -1) # move up
 
         if move != None:
             self.player.move(move)
 
         shootDirection = None
-        if keys[pygame.K_LEFT] and keys[pygame.K_UP]:
-            shootDirection = Direction.LEFT_UP
-        elif keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
-            shootDirection = Direction.LEFT_DOWN
-        elif keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
-            shootDirection = Direction.RIGHT_DOWN
-        elif keys[pygame.K_RIGHT] and keys[pygame.K_UP]:
-            shootDirection = Direction.RIGHT_UP
-        elif keys[pygame.K_LEFT]:
-            shootDirection = Direction.LEFT
+        if keys[pygame.K_LEFT]:
+            shootDirection = Direction(-1, 0) # move left
         elif keys[pygame.K_RIGHT]:
-            shootDirection = Direction.RIGHT
+            shootDirection = Direction(1, 0) # move right
         elif keys[pygame.K_DOWN]:
-            shootDirection = Direction.DOWN
+            shootDirection = Direction(0, 1) # move down
         elif keys[pygame.K_UP]:
-            shootDirection = Direction.UP
+            shootDirection = Direction(0, -1) # move up
         
 
         if shootDirection != None:

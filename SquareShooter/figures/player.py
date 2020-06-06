@@ -10,7 +10,7 @@ class Player(Figure):
         super().__init__(map, pozX, pozY, width, height)
         self.speed = speed
         self.shootDelay = 0
-        self.direction = Direction.RIGHT
+        self.direction = Direction(1, 0)
         self.shootStyle = NormalShooting(self)
 
     def move(self, direction):
@@ -20,18 +20,8 @@ class Player(Figure):
         self.shootStyle.shoot()
 
     def moveOnDirection(self, direction):
-        if direction == Direction.UP:
-            self.pozY -= self.speed
-            self.direction = Direction.UP
-        elif direction == Direction.DOWN:
-            self.pozY += self.speed
-            self.direction = Direction.DOWN
-        elif direction == Direction.LEFT:
-            self.pozX -= self.speed
-            self.direction = Direction.LEFT
-        elif direction == Direction.RIGHT:
-            self.pozX += self.speed
-            self.direction = Direction.RIGHT
+        self.pozX += self.speed * direction.dirX
+        self.pozY += self.speed * direction.dirY
 
         self.correctPosition()
 

@@ -15,26 +15,8 @@ class Bullet(Figure):
         pygame.draw.circle(self.map.window, self.color, (self.pozX, self.pozY), 6)
 
     def update(self):
-        if self.direction == Direction.LEFT:
-            self.pozX -= self.speed
-        elif self.direction == Direction.RIGHT:
-            self.pozX += self.speed
-        elif self.direction == Direction.UP:
-            self.pozY -= self.speed
-        elif self.direction == Direction.DOWN:
-            self.pozY += self.speed
-        elif self.direction == Direction.LEFT_UP:
-            self.pozX -= self.speed
-            self.pozY -= self.speed
-        elif self.direction == Direction.LEFT_DOWN:
-            self.pozX -= self.speed
-            self.pozY += self.speed
-        elif self.direction == Direction.RIGHT_UP:
-            self.pozX += self.speed
-            self.pozY -= self.speed
-        elif self.direction == Direction.RIGHT_DOWN:
-            self.pozX += self.speed
-            self.pozY += self.speed
+        self.pozX += self.speed * self.direction.dirX
+        self.pozY += self.speed * self.direction.dirY
 
         self.checkCollision()
 
