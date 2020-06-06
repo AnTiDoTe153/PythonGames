@@ -5,7 +5,7 @@ import pygame
 
 class Bullet(Figure):
 
-    def __init__(self, map, pozX, pozY, direction, speed = 5):
+    def __init__(self, map, pozX, pozY, direction, speed = 5.0):
         super().__init__(map, pozX, pozY, 20, 20, (255, 255, 0))
         self.direction = direction
         self.speed = speed
