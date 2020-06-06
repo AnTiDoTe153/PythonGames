@@ -2,6 +2,7 @@ import pygame
 from figures.figure import Figure
 from figures.player import Player
 from figures.target import Target
+from figures.bomb import Bomb
 
 from map.direction import Direction
 from map.gameMap import GameMap
@@ -22,6 +23,8 @@ class Game(Observer):
         self.map = self.screen.map
         self.player = Player(self.map, 50, 50, 50, 50, 5)
         self.map.addFigure(self.player)
+
+        self.map.addFigure(Bomb(self.map, 200, 200))
 
         self.resetTargets()
         self.initWindow()
