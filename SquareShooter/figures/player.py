@@ -1,5 +1,6 @@
 from figures.figure import Figure
 from figures.bullet import Bullet
+from figures.bomb import Bomb
 from map.direction import Direction
 from map.gameMap import GameMap
 from shootStyle.shootStyle import ShootStyle
@@ -10,7 +11,7 @@ class Player(Figure):
     def __init__(self, map, pozX, pozY, width, height, speed):
         super().__init__(map, pozX, pozY, width, height)
         self.speed = speed
-        self.shootDelay = 0
+        self.bombDelay = 0
         self.direction = Direction(1, 0)
         self.shootStyle = ShotgunShooting(self)
 
@@ -19,6 +20,12 @@ class Player(Figure):
 
     def shoot(self):
         self.shootStyle.shoot()
+
+    def placeBomb(self):
+        if self.bombDelay == 0:
+            bomb = Bomb(self.map, self.pozX, self.pozY)
+            self.map.addFigure(bomb)
+            self.bombDelay = 50
 
     def moveOnDirection(self, direction):
         self.pozX += self.speed * direction.dirX
@@ -35,3 +42,7 @@ class Player(Figure):
 
         self.pozX = max(self.width // 2, self.pozX)
         self.pozX = min(self.map.width - self.width // 2, self.pozX)
+
+    def update(self):
+        if self.bombDelay > 0:
+            self.bombDelay -= 1

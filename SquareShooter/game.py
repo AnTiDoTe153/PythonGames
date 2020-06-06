@@ -24,7 +24,6 @@ class Game(Observer):
         self.player = Player(self.map, 50, 50, 50, 50, 5)
         self.map.addFigure(self.player)
 
-        self.map.addFigure(Bomb(self.map, 200, 200))
 
         self.resetTargets()
         self.initWindow()
@@ -61,6 +60,9 @@ class Game(Observer):
 
         if move != None:
             self.player.move(move)
+
+        if keys[pygame.K_SPACE]:
+            self.player.placeBomb()
 
         shootDirection = None
         if keys[pygame.K_LEFT]:
