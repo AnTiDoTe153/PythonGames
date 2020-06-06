@@ -4,6 +4,7 @@ from map.direction import Direction
 from map.gameMap import GameMap
 from shootStyle.shootStyle import ShootStyle
 from shootStyle.normalShooting import NormalShooting
+from shootStyle.shotgunShooting import ShotgunShooting
 
 class Player(Figure):
     def __init__(self, map, pozX, pozY, width, height, speed):
@@ -11,7 +12,7 @@ class Player(Figure):
         self.speed = speed
         self.shootDelay = 0
         self.direction = Direction(1, 0)
-        self.shootStyle = NormalShooting(self)
+        self.shootStyle = ShotgunShooting(self)
 
     def move(self, direction):
         self.moveOnDirection(direction)

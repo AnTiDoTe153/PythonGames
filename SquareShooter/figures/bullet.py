@@ -15,8 +15,8 @@ class Bullet(Figure):
         pygame.draw.circle(self.map.window, self.color, (self.pozX, self.pozY), 6)
 
     def update(self):
-        self.pozX += self.speed * self.direction.dirX
-        self.pozY += self.speed * self.direction.dirY
+        self.pozX += int(self.speed * self.direction.dirX)
+        self.pozY += int(self.speed * self.direction.dirY)
 
         self.checkCollision()
 
