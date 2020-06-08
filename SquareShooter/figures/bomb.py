@@ -20,7 +20,6 @@ class Bomb(Figure):
             bulletDirection = Direction(direction[0], direction[1])
             bullet = Bullet(self.map, self.pozX, self.pozY, bulletDirection)
             self.map.addFigure(bullet)
-
     
     def draw(self):
         pygame.draw.circle(self.map.window, self.color, (self.pozX, self.pozY), 10)

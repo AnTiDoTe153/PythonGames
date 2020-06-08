@@ -26,6 +26,6 @@ class ShotgunShooting(ShootStyle):
             self.figure.map.addFigure(rightBullet)
 
             
-            self.shootDelay = 40
+            self.shootDelay = 20
         else:
             self.shootDelay -= 1

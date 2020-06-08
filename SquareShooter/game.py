@@ -3,6 +3,7 @@ from figures.figure import Figure
 from figures.player import Player
 from figures.target import Target
 from figures.bomb import Bomb
+from figures.powerup import Powerup
 
 from map.direction import Direction
 from map.gameMap import GameMap
@@ -21,12 +22,20 @@ class Game(Observer):
 
         self.screen = Screen(800, 800)
         self.map = self.screen.map
-        self.player = Player(self.map, 50, 50, 50, 50, 5)
+        self.player = Player(self.map, 50, 50, 75, 75, 5)
         self.map.addFigure(self.player)
 
-
+        self.lastPowerScore = 0
         self.resetTargets()
         self.initWindow()
+
+
+    def handlePowerUps(self):
+        if self.score % 20 == 0 and self.score > self.lastPowerScore:
+            self.lastPowerScore = self.score
+            self.map.addFigure(Powerup(self.map))
+
+            
 
     def notify(self, eventData = None):
         self.score += 10
@@ -87,6 +96,8 @@ class Game(Observer):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+
+            self.handlePowerUps()
 
             self.handleKeys()
             self.map.update()

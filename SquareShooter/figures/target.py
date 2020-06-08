@@ -3,13 +3,13 @@ from figures.healthBar import HealthBar
 from figures.bullet import Bullet
 from map.gameMap import GameMap
 from event import Event
-
+import pygame
 import random
 
 class Target(Figure, Event):
     
-    targetHeight = 30
-    targetWidth = 30
+    targetHeight = 60
+    targetWidth = 60
     maxHealth = 100
     targetColor = (30,144,255)
 
@@ -25,10 +25,14 @@ class Target(Figure, Event):
         self.health = Target.maxHealth
         self.healthBar = HealthBar(self, self.health)
 
+        self.targetImg = pygame.transform.scale(pygame.image.load('enemy.png'), (self.height, self.width))
+
     def draw(self):
+        self.map.window.blit(self.targetImg, (self.pozX - self.height // 2, self.pozY - self.width // 2))
+        # super().draw()
+        
         if(self.health < self.maxHealth):
             self.healthBar.draw()
-        super().draw()
 
     def onCollision(self, figure):
         if isinstance(figure, Bullet):

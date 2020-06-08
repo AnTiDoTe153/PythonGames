@@ -21,5 +21,6 @@ class GameMap():
         self.figures.append(figure)
 
     def removeFigure(self, figure):
-        self.figures.remove(figure)
+        if figure in self.figures:
+            self.figures.remove(figure)
                 

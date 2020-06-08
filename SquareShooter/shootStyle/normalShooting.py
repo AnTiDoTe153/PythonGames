@@ -12,6 +12,6 @@ class NormalShooting(ShootStyle):
         if self.shootDelay == 0:
             bullet = Bullet(self.figure.map, self.figure.pozX, self.figure.pozY, self.figure.direction)
             self.figure.map.addFigure(bullet)
-            self.shootDelay = 10
+            self.shootDelay = 15
         else:
             self.shootDelay -= 1

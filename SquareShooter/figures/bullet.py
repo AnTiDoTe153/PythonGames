@@ -11,8 +11,11 @@ class Bullet(Figure):
         self.speed = speed
         self.cnt = 0
 
+        self.bulletImg = pygame.transform.scale( pygame.image.load('projectile.png'), (self.height, self.width))
+
     def draw(self):
-        pygame.draw.circle(self.map.window, self.color, (self.pozX, self.pozY), 6)
+        # pygame.draw.circle(self.map.window, self.color, (self.pozX, self.pozY), 6)
+        self.map.window.blit(self.bulletImg, (self.pozX - self.height // 2, self.pozY - self.width // 2))
 
     def update(self):
         self.pozX += int(self.speed * self.direction.dirX)
